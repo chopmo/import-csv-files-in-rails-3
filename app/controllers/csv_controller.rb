@@ -5,9 +5,9 @@ class CsvController < ApplicationController
   end
 
   def upload
-    table = ImportTable.new :original_path => params[:upload][:csv].original_path
+    table = ImportTable.new :original_path => params[:upload][:csv].original_filename
     row_index = 0
-    CSV.parse(params[:upload][:csv]) do |cells|
+    CSV.parse(params[:upload][:csv].read) do |cells|
       column_index = 0
       cells.each do |cell|
         table.import_cells.build :column_index => column_index, :row_index => row_index, :contents => cell
